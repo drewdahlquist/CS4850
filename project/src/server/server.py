@@ -25,15 +25,21 @@ print('My chat room server. Version One.')
 print()
 
 # read in users.txt on startup
+with open('users.txt') as file:
+    lines = file.read().splitlines()
+    for line in lines:
+        user, pwd = line.strip('()').split(', ')
+        users[user] = pwd
 
+# open socket
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
-    print(f"Server listening on {HOST}:{PORT}")
+    # print(f"Server listening on {HOST}:{PORT}")
     while True:
         conn, addr = s.accept()
         with conn:
-            print(f"Connected by {addr}")
+            # print(f"Connected by {addr}")
             while True:
                 data = conn.recv(1024)
                 if not data:
@@ -70,9 +76,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 if(parsed[0] == 'send' and len(parsed) >= 2):
                     # logged in
                     if(online != ''):
-                        ack = f'{online}: {" ".join(parsed[1:])}.'
+                        ack = f'Ack:Server:{online}: {" ".join(parsed[1:])}'
                         conn.sendall(ack.encode())
-                        print(f'{online}: {" ".join(parsed[1:])}.')
+                        print(f'{online}: {" ".join(parsed[1:])}')
                     # not logged in
                     else:
                         err = f'Err:Server: Not logged in.'
@@ -81,7 +87,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 if(parsed[0] == 'logout'):
                     # logged in
                     if(online != ''):
-                        ack = f'Ack:Server: {online} left.'
+                        ack = f'Ack:Server:{online} left.'
                         conn.send(ack.encode())
                         print(f'{online} logout.')
                         online = ''

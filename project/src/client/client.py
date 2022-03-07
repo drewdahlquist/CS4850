@@ -66,7 +66,8 @@ while True:
                 s.send(cmd.encode())
                 data = s.recv(1024)
                 if(data.decode().startswith('Ack:')):
-                    print(data.decode().split(':')[2:])
+                    msg = data.decode().split(':')[2]+':'
+                    print(msg+''.join(data.decode().split(':')[3:]))
                 else:
                     pass
             # err
@@ -78,7 +79,7 @@ while True:
                 s.send(cmd.encode())
                 data = s.recv(1024)
                 if(data.decode().startswith('Ack:')):
-                    print(data.decode().split(':')[2:])
+                    print(''.join(data.decode().split(':')[2:]))
                 else:
                     pass
                 s.close()
