@@ -68,7 +68,11 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 if(parsed[0] == 'newuser' and len(parsed) == 3):
                     # user creation
                     if(parsed[1] not in users.keys()):
-                        users[parsed[1]] = parsed[2]
+                        users[parsed[1]] = parsed[2] # add to our in memory dictionary
+                        # write username & pass to storage
+                        with open('users.txt', 'a') as file:
+                            file.write(f'\n({parsed[1]}, {parsed[2]})')
+                            file.close()
                         ack = f'Ack:Server: New user created with username: {parsed[1]}, password: {parsed[2]}.'
                         conn.send(ack.encode())
                         print('New user account created.')
