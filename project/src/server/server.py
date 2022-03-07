@@ -4,7 +4,11 @@ Drew Dahlquist
 CS 4850, Computer Networks
 March 18, 2022
 
-TODO: Program description
+This is the server program for the CS 4850 socket chat-room project. Valid commands are:
+login UserID Password
+newuser UserID Password
+send Message
+logout
 """
 
 """
