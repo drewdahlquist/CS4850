@@ -1,4 +1,4 @@
-### Instructions
+## Instructions
 
 1. After unzipping the files `server.zip` and `client.zip` in the same working directory as `users.txt`,  you should have a directory structure like:
 ```
